@@ -16,7 +16,7 @@ interface OwnProps {
 
 type Props = OwnProps & ModalizeProps;
 
-const BottomDropdown = ({ data, onItemClick, ...rest }: Props, ref: React.Ref<Modalize>) => {
+const BottomSheet = ({ data, onItemClick, ...rest }: Props, ref: React.Ref<Modalize>) => {
   return (
     <Modalize ref={ref} snapPoint={300} {...rest}>
       <Container>
@@ -33,4 +33,4 @@ const BottomDropdown = ({ data, onItemClick, ...rest }: Props, ref: React.Ref<Mo
   );
 };
 
-export default forwardRef(BottomDropdown);
+export default forwardRef(BottomSheet);

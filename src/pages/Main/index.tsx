@@ -1,11 +1,10 @@
 import React, { useRef, useCallback, useState } from 'react';
-import { Animated, Easing } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 
-import BottomDropdown, { Item } from '~/components/BottomDropdown';
+import BottomSheet, { Item } from '~/components/BottomSheet';
+import Dropdown, { DropdownProps } from '~/components/Dropdown';
 
-import dropdownIconPath from './assets/dropdown-icon.png';
-import { Container, Dropdown, DropdownText } from './styles';
+import { Container } from './styles';
 
 const socialMedias = [
   { label: 'Facebook', value: 1 },
@@ -15,47 +14,39 @@ const socialMedias = [
 
 const Main: React.FC = () => {
   const modalizeRef = useRef<Modalize>(null);
+  const dropdownRef = useRef<DropdownProps>(null);
 
-  const [selectedCity, setSelectedCity] = useState('Escolha uma rede social');
-
-  const handleOpen = useCallback(() => {
-    Animated.timing(spinValue, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true,
-      easing: Easing.linear,
-    }).start();
-
-    if (modalizeRef.current) {
-      modalizeRef.current.open();
-    }
-  }, [spinValue]);
-
-  const handleClose = useCallback(() => {
-    Animated.timing(spinValue, {
-      toValue: 0,
-      duration: 200,
-      useNativeDriver: true,
-      easing: Easing.linear,
-    }).start();
-  }, [spinValue]);
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState('Escolha uma rede social');
 
   const handleItemClick = useCallback((item: Item) => {
-    setSelectedCity(item.label);
+    setSelectedSocialMedia(item.label);
 
     if (modalizeRef.current) {
       modalizeRef.current.close();
     }
   }, []);
 
+  const handleOpen = useCallback(() => {
+    if (dropdownRef.current) {
+      dropdownRef.current.startToEndAnimation();
+
+      if (modalizeRef.current) {
+        modalizeRef.current.open();
+      }
+    }
+  }, []);
+
+  const handleClose = useCallback(() => {
+    if (dropdownRef.current) {
+      dropdownRef.current.endToStartAnimation();
+    }
+  }, []);
+
   return (
     <Container>
-      <Dropdown onPress={handleOpen}>
-        <DropdownText>{selectedCity}</DropdownText>
-        <Animated.Image style={{ transform: [{ rotate: spin }] }} source={dropdownIconPath} />
-      </Dropdown>
+      <Dropdown ref={dropdownRef} text={selectedSocialMedia} onPress={handleOpen} />
 
-      <BottomDropdown ref={modalizeRef} data={socialMedias} onItemClick={handleItemClick} onClose={handleClose} />
+      <BottomSheet ref={modalizeRef} data={socialMedias} onItemClick={handleItemClick} onClose={handleClose} />
     </Container>
   );
 };
