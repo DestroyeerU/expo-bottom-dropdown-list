@@ -18,13 +18,6 @@ const Main: React.FC = () => {
 
   const [selectedCity, setSelectedCity] = useState('Escolha uma rede social');
 
-  const [spinValue] = useState(new Animated.Value(0));
-
-  const spin = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '180deg'],
-  });
-
   const handleOpen = useCallback(() => {
     Animated.timing(spinValue, {
       toValue: 1,
