@@ -11,12 +11,12 @@ interface OwnProps {
 
 type Props = OwnProps & RectButtonProperties;
 
-export interface DropdownProps {
+export interface AnimatedDropdownProps {
   startToEndAnimation: () => void;
   endToStartAnimation: () => void;
 }
 
-const Dropdown = ({ text, ...rest }: Props, ref: React.Ref<DropdownProps>) => {
+const AnimatedDropdown = ({ text, ...rest }: Props, ref: React.Ref<AnimatedDropdownProps>) => {
   const [spinValue] = useState(new Animated.Value(0));
 
   const spin = spinValue.interpolate({
@@ -55,4 +55,4 @@ const Dropdown = ({ text, ...rest }: Props, ref: React.Ref<DropdownProps>) => {
   );
 };
 
-export default forwardRef(Dropdown);
+export default forwardRef(AnimatedDropdown);

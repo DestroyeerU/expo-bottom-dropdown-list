@@ -8,6 +8,10 @@ export const Container = styled.View`
   padding: 0 2px;
 `;
 
+export const LoadingSpinner = styled.ActivityIndicator`
+  padding: 20px;
+`;
+
 export const Item = styled(RectButton)``;
 
 export const ItemContent = styled.View`

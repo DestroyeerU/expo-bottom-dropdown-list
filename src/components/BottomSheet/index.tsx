@@ -2,21 +2,34 @@
 import React, { forwardRef } from 'react';
 import { Modalize, ModalizeProps } from 'react-native-modalize';
 
-import { Container, Item, ItemContent, ItemText } from './styles';
+import { Container, Item, ItemContent, ItemText, LoadingSpinner } from './styles';
 
 export interface Item {
   label: string;
   value: number;
 }
 
+export type BottomSheetProps = Modalize;
+
 interface OwnProps {
   data: Item[];
+  loading?: boolean;
   onItemClick: (item: Item) => void;
 }
 
 type Props = OwnProps & ModalizeProps;
 
-const BottomSheet = ({ data, onItemClick, ...rest }: Props, ref: React.Ref<Modalize>) => {
+const BottomSheet = ({ data, loading, onItemClick, ...rest }: Props, ref: React.Ref<BottomSheetProps>) => {
+  if (loading) {
+    return (
+      <Modalize ref={ref} snapPoint={300} {...rest}>
+        <Container>
+          <LoadingSpinner size={30} />
+        </Container>
+      </Modalize>
+    );
+  }
+
   return (
     <Modalize ref={ref} snapPoint={300} {...rest}>
       <Container>

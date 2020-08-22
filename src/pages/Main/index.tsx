@@ -1,8 +1,8 @@
 import React, { useRef, useCallback, useState } from 'react';
 import { Modalize } from 'react-native-modalize';
 
+import AnimatedDropdown, { AnimatedDropdownProps } from '~/components/AnimatedDropdown';
 import BottomSheet, { Item } from '~/components/BottomSheet';
-import Dropdown, { DropdownProps } from '~/components/Dropdown';
 
 import { Container } from './styles';
 
@@ -14,7 +14,7 @@ const socialMedias = [
 
 const Main: React.FC = () => {
   const modalizeRef = useRef<Modalize>(null);
-  const dropdownRef = useRef<DropdownProps>(null);
+  const dropdownRef = useRef<AnimatedDropdownProps>(null);
 
   const [selectedSocialMedia, setSelectedSocialMedia] = useState('Escolha uma rede social');
 
@@ -44,9 +44,9 @@ const Main: React.FC = () => {
 
   return (
     <Container>
-      <Dropdown ref={dropdownRef} text={selectedSocialMedia} onPress={handleOpen} />
+      <AnimatedDropdown ref={dropdownRef} text={selectedSocialMedia} onPress={handleOpen} />
 
-      <BottomSheet ref={modalizeRef} data={socialMedias} onItemClick={handleItemClick} onClose={handleClose} />
+      <BottomSheet ref={modalizeRef} data={socialMedias} loading onItemClick={handleItemClick} onClose={handleClose} />
     </Container>
   );
 };
